@@ -68,7 +68,7 @@ def save_prover_inputs_flat_x(training_notes, commitment, filename):
     # (ostavi string ako tvoj Noir očekuje string; ako očekuje Field broj, skini navodnike)
     last = training_notes[-1]
     lines.append(
-        f'public_inputs = ["{commit_hex}", {last[0]}, {last[1]}, {last[2]}, {last[3]}]'
+        f'public_inputs = ["{commit_hex}", {last[0]}, {last[1]}, {last[2]}, {last[3]}, 3, "{hex(poseidon_hash([last[4]]))}"]'
     )
 
     with open(filename, "w") as f:

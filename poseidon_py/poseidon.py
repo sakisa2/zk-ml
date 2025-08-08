@@ -147,7 +147,7 @@ def poseidon_hash_ex(inpBI, nOuts):
     return hash_with_state_ex(inpBI, 0, nOuts)
 
 if __name__ == '__main__':
-    inputs = [16695921504346203620402905961257377471953351633387377477431034066224029724381, 1, 8512171, 93]
+    inputs = [0]
     try:
         h = poseidon_hash(inputs)
         print("Poseidon hash output:", hex(h))

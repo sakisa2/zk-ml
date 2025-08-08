@@ -126,10 +126,9 @@ fn main(
     }
     assert(h == public_inputs[0]);
 
-    // query + K + claimed
+    // query + K +  ed
     let q = [public_inputs[1], public_inputs[2], public_inputs[3], public_inputs[4]];
     let k: u32 = public_inputs[5] as u32;
-    let claimed: Field = public_inputs[6];
 
     let pts: [[Field;5];50] = [
         p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,
@@ -141,5 +140,7 @@ fn main(
 
     let sum_u32 = k_nearest_sum_label(pts, q, k);
     let pred = majority_from_sum(sum_u32, k);
-    assert(pred == claimed);
+    let pred_hash = poseidon::bn254::hash_1([pred]);
+    assert(pred_hash == public_inputs[6]);
+    
 }
