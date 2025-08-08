@@ -10,6 +10,8 @@ HASHES_FILE = Path("hashes/patient_hashes.txt")
 COMMITMENT_FILE = Path("hashes/commitment.txt")
 PROVER_FILE = Path("Prover.toml")
 
+SALT = 1234567890123456789012345678901234567890
+
 def encode_patient(row):
     pol = int(row["pol"])
     starost = int(row["starost"])
@@ -40,7 +42,7 @@ with open(HASHES_FILE, "w") as f:
     for h in hashes:
         f.write(hex(h) + "\n")
 
-# Novi način generisanja commitment-a
+
 commitment = poseidon_hash(training_notes[0])
 for encoded in training_notes[1:]:
     tmp = [commitment] + encoded
@@ -60,15 +62,17 @@ def save_prover_inputs_flat_x(training_notes, commitment, filename):
     lines = []
     for i, note in enumerate(training_notes, start=1):
         lines.append(f'p{i} = [{", ".join(str(x) for x in note)}]')
+    
+    lines.append(f'salt = "{SALT}"')
 
-    # isti string kao print(hex(commitment)), ali sa vodećim nulama (64 heks cifre)
     commit_hex = "0x" + format(commitment, "064x")
+    
+    salt_commit = poseidon_hash([SALT])
+    salt_commit_hex = "0x" + format(salt_commit, "064x")
 
-    # Ako želiš baš public_inputs = [commitment, ...] u heksu (string varijanta):
-    # (ostavi string ako tvoj Noir očekuje string; ako očekuje Field broj, skini navodnike)
     last = training_notes[-1]
     lines.append(
-        f'public_inputs = ["{commit_hex}", {last[0]}, {last[1]}, {last[2]}, {last[3]}, 3, "{hex(poseidon_hash([last[4]]))}"]'
+        f'public_inputs = ["{commit_hex}", {last[0]}, {last[1]}, {last[2]}, {last[3]}, 3, "{salt_commit_hex}"]'
     )
 
     with open(filename, "w") as f:

@@ -110,8 +110,9 @@ fn main(
     p36:[Field;5], p37:[Field;5], p38:[Field;5], p39:[Field;5], p40:[Field;5],
     p41:[Field;5], p42:[Field;5], p43:[Field;5], p44:[Field;5], p45:[Field;5],
     p46:[Field;5], p47:[Field;5], p48:[Field;5], p49:[Field;5], p50:[Field;5],
-    public_inputs:[Field;7]
-) {
+    public_inputs:[Field;7],
+    salt: Field,
+) -> pub Field{
     // commitment rekonstrukcija
     let rest:[[Field;5];49] = [
         p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,
@@ -130,6 +131,9 @@ fn main(
     let q = [public_inputs[1], public_inputs[2], public_inputs[3], public_inputs[4]];
     let k: u32 = public_inputs[5] as u32;
 
+    let salt_commit = public_inputs[6];
+    assert(poseidon::bn254::hash_1([salt]) == salt_commit);
+
     let pts: [[Field;5];50] = [
         p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,
         p11,p12,p13,p14,p15,p16,p17,p18,p19,p20,
@@ -140,7 +144,6 @@ fn main(
 
     let sum_u32 = k_nearest_sum_label(pts, q, k);
     let pred = majority_from_sum(sum_u32, k);
-    let pred_hash = poseidon::bn254::hash_1([pred]);
-    assert(pred_hash == public_inputs[6]);
-    
+    let pred_commit = poseidon::bn254::hash_2([pred, salt]);
+    pred_commit
 }
