@@ -60,20 +60,26 @@ prover_inputs = {
 
 def save_prover_inputs_flat_x(training_notes, commitment, filename):
     lines = []
+    # Privatni svedoci: 50 pacijenata
     for i, note in enumerate(training_notes, start=1):
         lines.append(f'p{i} = [{", ".join(str(x) for x in note)}]')
-    
+
+    # 2) Privatni upit q (tvoji simptomi) – ovde koristim p50 kao test;
+    #    u produkciji upiši stvarni q koji stiže sa fronta.
+    q0, q1, q2, q3 = training_notes[-1][0], training_notes[-1][1], training_notes[-1][2], training_notes[-1][3]
+    lines.append(f'q = [{q0}, {q1}, {q2}, {q3}]')
+
+    # 3) Privatni salt (int)
     lines.append(f'salt = "{SALT}"')
 
+    # 4) Javni ulazi: commitment, k, salt_commit
     commit_hex = "0x" + format(commitment, "064x")
-    
+    k = 3  # promeni po potrebi (npr. iz fronta)
     salt_commit = poseidon_hash([SALT])
     salt_commit_hex = "0x" + format(salt_commit, "064x")
 
-    last = training_notes[-1]
-    lines.append(
-        f'public_inputs = ["{commit_hex}", {last[0]}, {last[1]}, {last[2]}, {last[3]}, 3, "{salt_commit_hex}"]'
-    )
+    # SADA public_inputs ima SAMO 3 polja: [commitment, k, salt_commit]
+    lines.append(f'public_inputs = ["{commit_hex}", {k}, "{salt_commit_hex}"]')
 
     with open(filename, "w") as f:
         f.write("\n".join(lines))
