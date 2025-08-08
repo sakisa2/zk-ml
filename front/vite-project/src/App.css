@@ -1,0 +1,26 @@
+/* Prevent scrolling */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;        /* This disables scrolling */
+  height: 100%;
+}
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* header at top */
+  background-color: #f8f9fa;
+  font-family: Arial, sans-serif;
+  padding-top: 40px;
+}
+
+.card-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+

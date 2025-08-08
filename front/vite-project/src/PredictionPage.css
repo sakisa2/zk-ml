@@ -1,0 +1,63 @@
+/* App.css */
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  font-family: Arial, sans-serif;
+
+  box-sizing: border-box;  /* dodaj ovo */
+}
+
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 12px;
+  color: #555;
+  font-weight: 600;
+}
+
+.form input {
+  width: 100%;
+  padding: 8px 12px; /* malo smanjen padding */
+  margin-top: 4px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s ease;
+
+  box-sizing: border-box;  /* dodaj da padding i border ne proširuju */
+}
+
+
+.form input:focus {
+  outline: none;
+  border-color: #646cff;  /* ista nijansa kao u HealthCard dugmetu */
+  box-shadow: 0 0 6px #646cffaa;
+}
+
+.form button {
+  margin-top: 24px;
+  width: 100%;
+  background-color: #646cff;
+  color: white;
+  font-weight: 700;
+  padding: 14px 0;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+  background-color: #515ed9;
+}

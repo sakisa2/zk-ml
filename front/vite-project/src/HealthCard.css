@@ -1,0 +1,37 @@
+.health-card {
+  width: 300px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  background-color: white;
+  margin: 20px auto;
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.card-description {
+  margin: 12px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.card-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.card-button:hover {
+  background-color: #0056b3;
+}
